@@ -48,7 +48,7 @@ class ThreadUseCase {
           return new ReplyDetail({
             ...reply,
             content: reply.deletedAt ? '**balasan telah dihapus**' : reply.content,
-          })
+          });
         }),
       }),
     );
