@@ -1,10 +1,10 @@
 name: Continuous Integration
- 
+
 on: 
   pull_request:
     branches:
       - master
- 
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -13,7 +13,7 @@ jobs:
       matrix:
         node-version: ['18.x', '20.x']
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-   
+
     services:
       postgres:
         image: postgres
@@ -21,7 +21,7 @@ jobs:
          POSTGRES_USER: postgres
          POSTGRES_PASSWORD: mysecretpassword
          POSTGRES_DB: forumapi_test
-         
+             
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -29,7 +29,7 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
- 
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
