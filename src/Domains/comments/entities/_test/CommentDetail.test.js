@@ -8,6 +8,7 @@ describe('CommentDetail entities', () => {
       username: 'dicoding',
       date: '2021-08-08T07:19:09.775Z',
       content: 'content',
+      likeCount: 0,
     };
 
     // Action and Assert
@@ -21,6 +22,7 @@ describe('CommentDetail entities', () => {
       username: true,
       date: {},
       content: 'content',
+      likeCount: '0',
       replies: 1000,
     };
 
@@ -36,6 +38,7 @@ describe('CommentDetail entities', () => {
       username: 'dicoding',
       date: '2021-08-08T07:19:09.775Z',
       content: 'content',
+      likeCount: 1,
       replies: [],
     };
 
@@ -45,6 +48,7 @@ describe('CommentDetail entities', () => {
       username,
       date,
       content,
+      likeCount,
       replies,
     } = new CommentDetail(payload);
 
@@ -53,6 +57,7 @@ describe('CommentDetail entities', () => {
     expect(username).toEqual(payload.username);
     expect(date).toEqual(payload.date);
     expect(content).toEqual(payload.content);
+    expect(likeCount).toEqual(payload.likeCount);
     expect(replies).toEqual(replies);
   });
 });
