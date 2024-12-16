@@ -1,5 +1,4 @@
 const AddedReply = require('../../Domains/replies/entities/AddedReply');
-// const ReplyDetail = require('../../Domains/replies/entities/ReplyDetail');
 const ReplyRepository = require('../../Domains/replies/ReplyRepository');
 const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');

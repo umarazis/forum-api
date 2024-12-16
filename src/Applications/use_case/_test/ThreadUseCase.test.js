@@ -7,6 +7,8 @@ const CommentRepository = require('../../../Domains/comments/CommentRepository')
 const CommentDetail = require('../../../Domains/comments/entities/CommentDetail');
 const ReplyRepository = require('../../../Domains/replies/ReplyRepository');
 const ReplyDetail = require('../../../Domains/replies/entities/ReplyDetail');
+const LikeRepository = require('../../../Domains/likes/LikeRepository');
+
 
 describe('ThreadUseCase', () => {
   describe('ThreadUseCase addThread action', () => {
@@ -153,22 +155,40 @@ describe('ThreadUseCase', () => {
         },
       ];
 
+      const likes = [
+        {
+          id: 'like-123',
+          commentId: 'comment-123',
+        },
+        {
+          id: 'like-321',
+          commentId: 'comment-123',
+        },
+        {
+          id: 'like-1234',
+          commentId: 'comment-321',
+        },
+      ];
+
       /** creating dependency of use case */
       const mockThreadRepository = new ThreadRepository();
       const mockCommentRepository = new CommentRepository();
       const mockReplyRepository = new ReplyRepository();
+      const mockLikeRepository = new LikeRepository();
 
       /** mocking needed function */
       mockThreadRepository.verifyThreadAvailability = jest.fn(() => Promise.resolve());
       mockThreadRepository.getThreadById = jest.fn(() => Promise.resolve(mockThreadDetail));
       mockCommentRepository.getCommentsByThreadId = jest.fn(() => Promise.resolve(comments));
       mockReplyRepository.getRepliesByCommentIds = jest.fn(() => Promise.resolve(replies));
+      mockLikeRepository.getLikesByCommentIds = jest.fn(() => Promise.resolve(likes));
 
       /** creating use case instance */
       const threadUseCase = new ThreadUseCase({
         threadRepository: mockThreadRepository,
         commentRepository: mockCommentRepository,
         replyRepository: mockReplyRepository,
+        likeRepository: mockLikeRepository,
       });
 
       // Action
@@ -187,6 +207,7 @@ describe('ThreadUseCase', () => {
             username: 'johndoe',
             date: '2021-08-08T07:22:33.555Z',
             content: 'sebuah comment',
+            likeCount: 2,
             replies: [
               new ReplyDetail({
                 id: 'reply-123',
@@ -207,6 +228,7 @@ describe('ThreadUseCase', () => {
             username: 'johndoe',
             date: '2022-08-08T07:22:33.555Z',
             content: '**komentar telah dihapus**',
+            likeCount: 1,
             replies: [
               new ReplyDetail({
                 id: 'reply-1234',
@@ -223,6 +245,7 @@ describe('ThreadUseCase', () => {
       expect(mockThreadRepository.getThreadById).toHaveBeenCalledWith('thread-123');
       expect(mockCommentRepository.getCommentsByThreadId).toHaveBeenCalledWith('thread-123');
       expect(mockReplyRepository.getRepliesByCommentIds).toHaveBeenCalledWith(['comment-123', 'comment-321']);
+      expect(mockLikeRepository.getLikesByCommentIds).toHaveBeenCalledWith(['comment-123', 'comment-321']);
     });
   });
 });

@@ -7,6 +7,7 @@ class CommentDetail {
       username,
       date,
       content,
+      likeCount,
       replies,
     } = payload;
 
@@ -14,6 +15,7 @@ class CommentDetail {
     this.username = username;
     this.date = date;
     this.content = content;
+    this.likeCount = likeCount;
     this.replies = replies;
   }
 
@@ -22,6 +24,7 @@ class CommentDetail {
     username,
     date,
     content,
+    likeCount,
     replies
   }) {
     if (!id || !username || !date || !content || !replies) {
@@ -33,6 +36,7 @@ class CommentDetail {
       typeof username !== 'string' ||
       typeof date !== 'string' ||
       typeof content !== 'string' ||
+      typeof likeCount !== 'number' ||
       !Array.isArray(replies)
     ) {
       throw new Error('COMMENT_DETAIL.NOT_MEET_DATA_TYPE_SPECIFICATION');
